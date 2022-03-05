@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'modul/css/main.css' %}">
+    <title>Kozhobekov</title>
+</head>
+<body style="background-color: #1b2b4c;">
+    <h1 style="color: #ffffff;">Tables</h1>
+    <div class="tabs">
+      <input type="radio" id="tab1" name="tab-control" checked>
+      <input type="radio" id="tab2" name="tab-control">
+      <input type="radio" id="tab3" name="tab-control">  
+      <input type="radio" id="tab4" name="tab-control">
+      <input type="radio" id="tab5" name="tab-control">
+      <input type="radio" id="tab6" name="tab-control">
+      <input type="radio" id="tab7" name="tab-control">
+      <input type="radio" id="tab8" name="tab-control">
+      <input type="radio" id="tab9" name="tab-control">
+      <input type="radio" id="tab10" name="tab-control">
+      <ul>
+        <li title="Budget"><label for="tab1" role="button"><br><span>Budget</span></label></li>
+        <li title="Position"><label for="tab2" role="button"><br><span>Position</span></label></li>
+        <li title="Unit"><label for="tab3" role="button"><br><span>Unit</span></label></li> 
+        <li title="Employee"><label for="tab4" role="button"><br><span>Employee</span></label></li>
+        <li title="Product"><label for="tab5" role="button"><br><span>Product</span></label></li>
+        <li title="Rawmaterial"><label for="tab6" role="button"><br><span>Rawmaterial</span></label></li>
+        <li title="Ingredient"><label for="tab7" role="button"><br><span>Ingredient</span></label></li>
+        <li title="Rawmaterial"><label for="tab8" role="button"><br><span>Purchase</span></label></li>
+        <li title="Rawmaterial"><label for="tab9" role="button"><br><span>Production</span></label></li>
+        <li title="Rawmaterial"><label for="tab10" role="button"><br><span>Sale</span></label></li>
+      </ul>
+      
+      <div class="slider"></div>
+      <div class="content">
+<section>
+          <h2>Budget</h2>
+          <table cellpadding="4" cellspacing="1">
+            <tr>
+                <th>Cумма бюджета</th>
+            </tr>
+            {% for budjet in budjets %}
+                <tr>
+                    <td> 
+                        {{ budjet.Amoun_budjet }}
+                        {{  error }}
+                    </td>
+                    <td>
+                        <a href="{% url 'budjetsupdate' budjet.id %}" class="shine-button">Редактировать</a>
+                    </td>
+                    <td>
+                        <form id="delete_form" action="{% url 'budjetsdelete' budjet.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="shine-button">Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+        </table><br>
+    
+    <a href="{% url 'createbudjet' %}" class="floating-button">Добавить</a>
+</section>
+<section>
+              <h2>Position</h2>
+              <table>
+                <tr>
+                    <th>Должности</th>
+                </tr>
+                {% for position in positions %}
+                    <tr>
+                        <td> {{ position.Position }}</td>
+                        <td>
+                            <a href="{% url 'positionupdate' position.id %}" class="shine-button">Редактировать</a>
+                        </td>
+                        <td>
+                            <form id="delete_form" action="{% url 'positiondelete' position.id %}" method="post">{% csrf_token %}
+                                <button type="submit" class="shine-button">Удалить</button>
+                            </form>
+        
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table><br>
+        
+        <a href="{% url 'createposition' %}" class="floating-button">Добавить</a>
+</section>
+<section>
+              <h2>Unit</h2>
+              <table>
+                <tr>
+                    <th>Единицы измерения</th>
+                </tr>
+                {% for unit in units %}
+                    <tr>
+                        <td>{{ unit.Unit }}</td>
+                        <td>
+                            <a href="{% url 'unitupdate' unit.id %}" class="shine-button">Редактировать</a>
+                        </td>
+                        <td>
+                            <form id="delete_form" action="{% url 'unitdelete' unit.id %}" method="post">{% csrf_token %}
+                                <button type="submit" class="shine-button">Удалить</button>
+                            </form>
+        
+                        </td>
+                    </tr>
+                {% endfor%}
+            </table><br>
+        
+            <a href="{% url 'createunit' %}" class="floating-button">Добавить</a>
+</section>
+<section>
+              <h2>Employee</h2>
+              <table>
+                <tr>
+                    <th>ФИО</th>
+                    <th>Должность</th>
+                    <th>Оклад</th>
+                    <th>Адрес</th>
+                    <th>Телефон</th>
+                </tr>
+                {% for employee in employees %}
+                    <tr>
+                        <td>{{ employee.Full_name }}</td>
+                        <td>{{ employee.Position.Position }}</td>
+                        <td>{{ employee.Salary }}</td>
+                        <td>{{ employee.Address }}</td>
+                        <td>{{ employee.Phone }}</td>
+                        <td>
+                            <a href="{% url 'employeeupdate' employee.id %}" class="shine-button">Редактировать</a>
+                        </td>
+                        <td>
+                            <form id="delete_form" action="{% url 'employeedelete' employee.id %}" method="post">{% csrf_token %}
+                                <button type="submit" class="shine-button">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %} 
+            </table><br>
+        
+        <a href="{% url 'createemployee' %}" class="floating-button">Добавить</a>
+</section>
+<section>
+                <h2>Product</h2>
+                <table>
+                    <tr>
+                        <th>Продукт</th>
+                        <th>Единица измерения</th>
+                        <th>Сумма</th>
+                        <th>Количество</th>
+                    </tr>
+                    {% for product in products %}
+                        <tr>
+                            <td>{{ product.Product }}</td>
+                            <td>{{ product.Unit.Unit }}</td>
+                            <td>{{ product.Summ }}</td>
+                            <td>{{ product.Amount }}</td>
+                            <td>
+                                <a href="{% url 'productupdate' product.id %}" class="shine-button">Редактировать</a>
+                            </td>
+                            <td>
+                                <form id="delete_form" action="{% url 'productdelete' product.id %}" method="post">{% csrf_token %}
+                                    <button type="submit" class="shine-button">Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor%}
+                </table><br>
+            
+            <a href="{% url 'createproduct' %}" class="floating-button">Добавить</a>
+</section>
+<section>
+                <h2>Rawmaterial</h2>
+                <table>
+                    <tr>
+                        <th>Название сырья</th>
+                        <th>Единица измерения</th>
+                        <th>Сумма</th>
+                        <th>Количество</th>
+                    </tr>
+                    {% for rawmaterial in raws %}
+                        <tr>
+                            <td>{{ rawmaterial.Rm_name }}</td>
+                            <td>{{ rawmaterial.Unit.Unit }}</td>
+                            <td>{{ rawmaterial.Summ }}</td>
+                            <td>{{ rawmaterial.Amount }}</td>
+                            <td>
+                                <a href="{% url 'rawupdate' rawmaterial.id %}" class="shine-button">Редактировать</a>
+                            </td>
+                            <td>
+                                <form id="delete_form" action="{% url 'rawdelete' rawmaterial.id %}" method="post">{% csrf_token %}
+                                    <button type="submit" class="shine-button">Удалить</button>
+                                </form>
+            
+                            </td>
+                        </tr>
+                    {% endfor%}
+                </table><br>
+            
+                <a href="{% url 'createraw' %}" class="floating-button">Добавить</a>
+</section>
+<section>
+                <h2>Ingredient</h2>
+                <table>
+                    <tr>
+                        <th>Продукт</th>
+                        <th>Сырьё</th>
+                        <th>Количество</th>
+                    </tr>
+                    {% for ingredient in ingredients %}
+                        <tr>
+                            <td>{{ ingredient.Product.Product }}</td>
+                            <td>{{ ingredient.Rm_name.Rm_name }}</td>
+                            <td>{{ ingredient.Amount }}</td>
+                            <td>
+                                <a href="{% url 'ingupdate' ingredient.id %}" class="shine-button">Редактировать</a>
+                            </td>
+                            <td>
+                                <form id="delete_form" action="{% url 'ingdelete' ingredient.id %}" method="post">{% csrf_token %}
+                                    <button type="submit" class="shine-button">Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor%}
+                </table><br>
+            
+                <a href="{% url 'createingredient' %}" class="floating-button">Добавить</a>
+</section>
+<section>
+    <h2>Purchase</h2>
+    <table cellpadding="4" cellspacing="1">
+      <tr>
+          <th>Сырье</th>
+          <th>Количество</th>
+          <th>Сумма</th>
+          <th>Дата</th>
+          <th>Сотрудник</th>
+
+      </tr>
+      {% for purchase in purchases %}
+          <tr>
+            <td> 
+                {{ purchase.Rm_name.Rm_name }}
+            </td>
+            <td> 
+                {{ purchase.Amount }}
+            </td>
+            <td> 
+                {{ purchase.Summ }}
+            </td>
+            <td> 
+                {{ purchase.Date }}
+            </td>
+            <td> 
+                {{ purchase.Employee.Full_name }}
+            </td>
+              <td>
+                  <a href="{% url 'purupdate' purchase.id %}" class="shine-button">Редактировать</a>
+              </td>
+              <td>
+                  <form id="delete_form" action="{% url 'purdelete' purchase.id %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit" class="shine-button">Удалить</button>
+                  </form>
+              </td>
+          </tr>
+          {% endfor %}
+  </table><br>
+
+<a href="{% url 'createpurchase' %}" class="floating-button">Добавить</a>
+</section>  
+      </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+from . import views
+from django.urls import path
+
+urlpatterns = [
+    path("",views.IndexView, name = 'Home'),
+    path('budjet/<int:pk>',views.BudjetUpdateView.as_view(),name = 'budjetsupdate'),
+    path('budjetdelete/<int:pk>',views.BudjetDeleteView.as_view(),name = 'budjetsdelete'),
+    path('position/<int:pk>',views.PositionUpdateView.as_view(),name = 'positionupdate'),
+    path('positiondelete/<int:pk>',views.PositionDeleteView.as_view(),name = 'positiondelete'),
+    path('employee/<int:pk>',views.EmployeeUpdateView.as_view(),name = 'employeeupdate'),
+    path('employeedelete/<int:pk>',views.EmployeeDeleteView.as_view(),name = 'employeedelete'),
+    path('unit/<int:pk>',views.UnitUpdateView.as_view(),name = 'unitupdate'),
+    path('unitdelete/<int:pk>',views.UnitDeleteView.as_view(),name = 'unitdelete'),
+    path('product/<int:pk>',views.ProductUpdateView.as_view(),name = 'productupdate'),
+    path('productdelete/<int:pk>',views.ProductDeleteView.as_view(),name = 'productdelete'),
+    path('rawmaterial/<int:pk>',views.RawUpdateView.as_view(),name = 'rawupdate'),
+    path('rawdelete/<int:pk>',views.RawDeleteView.as_view(),name = 'rawdelete'),
+    path('purchaseup/<int:pk>',views.PurchaseUpdateView.as_view(),name = 'purupdate'),
+    path('purchasedel/<int:pk>',views.PurchaseDeleteView.as_view(),name = 'purdelete'),
+    path('ingredient/<int:pk>',views.IngUpdateView.as_view(),name = 'ingupdate'),
+    path('ingdelete/<int:pk>',views.IngDeleteView.as_view(),name = 'ingdelete'),
+    path('createbudjet',views.CreateBudjet,name = 'createbudjet'),
+    path('createposition',views.CreatePosition,name = 'createposition'),
+    path('createemployee',views.CreateEmployee,name = 'createemployee'),
+    path('createunit',views.CreateUnit,name = 'createunit'),
+    path('createproduct',views.CreateProduct,name = 'createproduct'),
+    path('createrawmaterial',views.CreateRaw,name = 'createraw'),
+    path('createingredient',views.CreateIng,name = 'createingredient'),
+    path('createpurchase',views.CreatePurchase,name = 'createpurchase'),
+]
