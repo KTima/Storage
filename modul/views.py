@@ -145,11 +145,30 @@ def CreatePurchase(request):
 
 def CreateSale(request):
     error = ''
+    budjet = Budjet.objects.get(id=24)
     if request.method == 'POST':
         form = SaleForm(request.POST)
+        pr = request.POST.get('Product')
+        amount = request.POST.get('Amount')
+        summ = request.POST.get('Summ')
+        date = request.POST.get('Date')
+        products = Products.objects.get(id=pr)
+        seb = 0
         if form.is_valid():
-            form.save()
-            return redirect('Home')
+            if int(amount)<=products.Amount:
+                seb = products.Summ / products.Amount
+                products.Amount = products.Amount - int(amount)
+                products.Summ = products.Summ -(int(seb)*int(amount))
+                proc = 100-(((int(seb)*int(amount))/int(summ)) * 100)
+                budjet.Amoun_budjet = budjet.Amoun_budjet + int(summ)
+                budjet.Date = date
+                budjet.Procent = proc
+                budjet.save()
+                products.save()
+                form.save()
+                return redirect('Home')
+            else:
+                error = "Недостаточно количества продукта"
         else:
             error = "Форма была неверно введена"
     form = SaleForm

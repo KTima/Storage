@@ -7,6 +7,8 @@ from django.db import models
 
 class Budjet(models.Model):
     Amoun_budjet = models.IntegerField("Сумма бюджета",default=0)
+    Date = models.DateField("дата продажи",default=None,null=True)
+    Procent = models.IntegerField("процент прибыли",default=0)
 
     def __str__(self):
         return str(self.Amoun_budjet)
