@@ -30,8 +30,8 @@
         <li title="Rawmaterial"><label for="tab6" role="button"><br><span>Rawmaterial</span></label></li>
         <li title="Ingredient"><label for="tab7" role="button"><br><span>Ingredient</span></label></li>
         <li title="Rawmaterial"><label for="tab8" role="button"><br><span>Purchase</span></label></li>
-        <li title="Rawmaterial"><label for="tab9" role="button"><br><span>Production</span></label></li>
-        <li title="Rawmaterial"><label for="tab10" role="button"><br><span>Sale</span></label></li>
+        <li title="Sale"><label for="tab9" role="button"><br><span>Sale</span></label></li>
+        <li title="Rawmaterial"><label for="tab10" role="button"><br><span>Production</span></label></li>
       </ul>
       
       <div class="slider"></div>
@@ -209,21 +209,21 @@
                         <th>Сырьё</th>
                         <th>Количество</th>
                     </tr>
-                    {% for ingredient in ingredients %}
-                        <tr>
-                            <td>{{ ingredient.Product.Product }}</td>
-                            <td>{{ ingredient.Rm_name.Rm_name }}</td>
-                            <td>{{ ingredient.Amount }}</td>
-                            <td>
-                                <a href="{% url 'ingupdate' ingredient.id %}" class="shine-button">Редактировать</a>
-                            </td>
-                            <td>
-                                <form id="delete_form" action="{% url 'ingdelete' ingredient.id %}" method="post">{% csrf_token %}
-                                    <button type="submit" class="shine-button">Удалить</button>
-                                </form>
-                            </td>
+                    {% for ing in ings %}
+                        <tr> 
+                                        <td>{{  ing.Product.Product}}</td>
+                                        <td>{{ ing.Rm_name.Rm_name}}</td>
+                                        <td>{{ ing.Amount}}</td>
+                                        <td>
+                                            <a href="{% url 'ingupdate' ing.id %}" class="shine-button">Редактировать</a>
+                                        </td>
+                                        <td>
+                                            <form id="delete_form" action="{% url 'ingdelete' ing.id %}" method="post">{% csrf_token %}
+                                            <button type="submit" class="shine-button">Удалить</button>
+                                        </form>
+                                         </td>
                         </tr>
-                    {% endfor%}
+                        {% endfor %}
                 </table><br>
             
                 <a href="{% url 'createingredient' %}" class="floating-button">Добавить</a>
@@ -270,7 +270,89 @@
   </table><br>
 
 <a href="{% url 'createpurchase' %}" class="floating-button">Добавить</a>
-</section>  
+</section> 
+<section>
+    <h2>Sale</h2>
+    <table cellpadding="4" cellspacing="1">
+      <tr>
+          <th>Продукт</th>
+          <th>Количество</th>
+          <th>Сумма</th>
+          <th>Дата</th>
+          <th>Сотрудник</th>
+
+      </tr>
+      {% for sale in sales %}
+          <tr>
+            <td> 
+                {{ sale.Product.Product }}
+            </td>
+            <td> 
+                {{ sale.Amount }}
+            </td>
+            <td> 
+                {{ sale.Summ }}
+            </td>
+            <td> 
+                {{ sale.Date }}
+            </td>
+            <td> 
+                {{ sale.Employee.Full_name }}
+            </td>
+              <td>
+                  <a href="{% url 'saleupdate' sale.id %}" class="shine-button">Редактировать</a>
+              </td>
+              <td>
+                  <form id="delete_form" action="{% url 'saledelete' sale.id %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit" class="shine-button">Удалить</button>
+                  </form>
+              </td>
+          </tr>
+          {% endfor %}
+  </table><br>
+
+<a href="{% url 'createsale' %}" class="floating-button">Добавить</a>
+</section>
+<section>
+    <h2>Prodction</h2>
+    <table cellpadding="4" cellspacing="1">
+      <tr>
+          <th>Продукт</th>
+          <th>Количество</th>
+          <th>Дата</th>
+          <th>Сотрудник</th>
+
+      </tr>
+      {% for production in productions %}
+          <tr>
+            <td> 
+                {{ production.Product.Product }}
+            </td>
+            <td> 
+                {{ production.Amount }}
+            </td>
+            <td> 
+                {{ production.Date }}
+            </td>
+            <td> 
+                {{ production.Employee.Full_name }}
+            </td>
+              <td>
+                  <a href="{% url 'productionupdate' production.id %}" class="shine-button">Редактировать</a>
+              </td>
+              <td>
+                  <form id="delete_form" action="{% url 'productiondelete' production.id %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit" class="shine-button">Удалить</button>
+                  </form>
+              </td>
+          </tr>
+          {% endfor %}
+  </table><br>
+
+<a href="{% url 'createproduction' %}" class="floating-button">Добавить</a>
+</section>
       </div>
     </div>
 </body>

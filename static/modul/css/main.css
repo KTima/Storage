@@ -282,6 +282,40 @@ body h1 {
   .tabs input[name=tab-control]:nth-of-type(8):checked ~ .content > section:nth-child(8) {
     display: block;
   }
+  .tabs input[name=tab-control]:nth-of-type(9):checked ~ ul > li:nth-child(9) > label {
+    cursor: default;
+    color: #428bff;
+  }
+  .tabs input[name=tab-control]:nth-of-type(9):checked ~ ul > li:nth-child(9) > label svg {
+    fill: #428bff;
+  }
+  @media (max-width: 600px) {
+    .tabs input[name=tab-control]:nth-of-type(9):checked ~ ul > li:nth-child(9) > label {
+      background: rgba(0, 0, 0, 0.08);
+    }
+  }
+  .tabs input[name=tab-control]:nth-of-type(9):checked ~ .slider {
+    transform: translateX(600%);
+  }
+  .tabs input[name=tab-control]:nth-of-type(9):checked ~ .content > section:nth-child(9) {
+    display: block;
+  }
+  .tabs input[name=tab-control]:nth-of-type(10):checked ~ ul > li:nth-child(10) > label {
+    cursor: default;
+    color: #428bff;
+  }
+ 
+  @media (max-width: 600px) {
+    .tabs input[name=tab-control]:nth-of-type(10):checked ~ ul > li:nth-child(10) > label {
+      background: rgba(0, 0, 0, 0.08);
+    }
+  }
+  .tabs input[name=tab-control]:nth-of-type(10):checked ~ .slider {
+    transform: translateX(400%);
+  }
+  .tabs input[name=tab-control]:nth-of-type(10):checked ~ .content > section:nth-child(10) {
+    display: block;
+  }
   @-webkit-keyframes content {
     from {
       opacity: 0;

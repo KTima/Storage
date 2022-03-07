@@ -1,3 +1,4 @@
+from datetime import datetime
 from sqlite3 import Date
 from tabnanny import verbose
 from django.db import models
@@ -93,7 +94,7 @@ class Production(models.Model):
     Employee = models.ForeignKey(Employees,verbose_name="Сотрудник",null=True,on_delete=models.SET_NULL)
 
     def __str__(self):
-        return str(self.Product),str(self.Date)
+        return str(self.Product)
 
     class Meta:
         verbose_name = 'Производство'
@@ -113,6 +114,9 @@ class PurRawmaterial(models.Model):
         verbose_name = 'Покупка сырья'
         verbose_name_plural = 'Покупки сырья'
 
+def default_datetime():
+     return datetime.now()
+
 class SaleProduct(models.Model):
     Product = models.ForeignKey(Products,verbose_name="Продукт",null=True,on_delete=models.CASCADE)
     Amount = models.IntegerField("Количество",default=0)
@@ -121,7 +125,7 @@ class SaleProduct(models.Model):
     Employee = models.ForeignKey(Employees,verbose_name="Сотрудник",null=True,on_delete=models.SET_NULL)
 
     def __str__(self):
-        return str(self.Product),str(self.Date)
+        return str(self.Product)
 
     class Meta:
         verbose_name = 'Продажа сырья'

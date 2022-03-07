@@ -142,6 +142,37 @@ def CreatePurchase(request):
     }
     return render(request,'modul/createpurchase.html',context)
 
+
+def CreateSale(request):
+    error = ''
+    if request.method == 'POST':
+        form = SaleForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('Home')
+        else:
+            error = "Форма была неверно введена"
+    form = SaleForm
+    context = {'form':form,
+    'error':error,
+    }
+    return render(request,'modul/createsale.html',context)
+
+def CreateProduction(request):
+    error = ''
+    if request.method == 'POST':
+        form = ProductionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('Home')
+        else:
+            error = "Форма была неверно введена"
+    form = ProductionForm
+    context = {'form':form,
+    'error':error,
+    }
+    return render(request,'modul/createproduction.html',context)
+
 def IndexView(request):
     budjets = Budjet.objects.all()
     positions = Jobposition.objects.all()
@@ -149,8 +180,10 @@ def IndexView(request):
     units = Units.objects.all()
     products = Products.objects.all()
     raws = Rawmaterial.objects.all()
-    ingredients = Ingredients.objects.all()
+    ings = Ingredients.objects.all()
     purchases = PurRawmaterial.objects.all()
+    sales = SaleProduct.objects.all()
+    productions = Production.objects.all()
     context = {
         "budjets":budjets,
         "positions":positions,
@@ -158,8 +191,10 @@ def IndexView(request):
         "units":units,
         "products":products,
         "raws":raws,
-        "ingredients":ingredients,
+        "ings":ings,
         "purchases":purchases,
+        "sales":sales,
+        "productions":productions,
     }
     return render(request,"modul/index.html",context)
 
@@ -251,5 +286,27 @@ class PurchaseUpdateView(UpdateView):
 
 class PurchaseDeleteView(DeleteView):
     model = PurRawmaterial
+    template_name = 'modul/index.html'
+    success_url = reverse_lazy("Home")
+
+class SaleUpdateView(UpdateView):
+    model = SaleProduct
+    template_name = 'modul/createsale.html'
+    form_class = SaleForm
+    success_url = reverse_lazy("Home")
+
+class SaleDeleteView(DeleteView):
+    model = SaleProduct
+    template_name = 'modul/index.html'
+    success_url = reverse_lazy("Home")
+
+class ProductionUpdateView(UpdateView):
+    model = Production
+    template_name = 'modul/createproduction.html'
+    form_class = ProductionForm
+    success_url = reverse_lazy("Home")
+
+class ProductionDeleteView(DeleteView):
+    model = Production
     template_name = 'modul/index.html'
     success_url = reverse_lazy("Home")

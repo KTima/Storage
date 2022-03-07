@@ -19,6 +19,10 @@ urlpatterns = [
     path('purchasedel/<int:pk>',views.PurchaseDeleteView.as_view(),name = 'purdelete'),
     path('ingredient/<int:pk>',views.IngUpdateView.as_view(),name = 'ingupdate'),
     path('ingdelete/<int:pk>',views.IngDeleteView.as_view(),name = 'ingdelete'),
+    path('saleupdate/<int:pk>',views.SaleUpdateView.as_view(),name = 'saleupdate'),
+    path('saledelete/<int:pk>',views.SaleDeleteView.as_view(),name = 'saledelete'),
+    path('productionupdate/<int:pk>',views.ProductionUpdateView.as_view(),name = 'productionupdate'),
+    path('productiondelete/<int:pk>',views.ProductionDeleteView.as_view(),name = 'productiondelete'),
     path('createbudjet',views.CreateBudjet,name = 'createbudjet'),
     path('createposition',views.CreatePosition,name = 'createposition'),
     path('createemployee',views.CreateEmployee,name = 'createemployee'),
@@ -27,4 +31,6 @@ urlpatterns = [
     path('createrawmaterial',views.CreateRaw,name = 'createraw'),
     path('createingredient',views.CreateIng,name = 'createingredient'),
     path('createpurchase',views.CreatePurchase,name = 'createpurchase'),
+    path('createsale',views.CreateSale,name = 'createsale'),
+    path('createproduction',views.CreateProduction,name = 'createproduction'),
 ]
