@@ -1,13 +1,14 @@
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from django import forms
 from .models import *
 from django.forms import ModelForm,DateInput
 
 class BudjetForm(ModelForm):
     class Meta:
         model = Budjet
-        fields = ['Amoun_budjet']
+        fields = ['Amoun_budjet','Procent']
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -102,7 +103,7 @@ class PurchaseForm(ModelForm):
 class SaleForm(ModelForm):
     class Meta:
         model = SaleProduct
-        fields = ['Product','Amount','Summ','Date','Employee']
+        fields = ['Product','Amount','Date','Employee']
 
         widgets = {
             "Date":DateInput(attrs={'type': 'date'} ),

@@ -59,12 +59,10 @@
                 </tr>
                 {% endfor %}
                 <tr>
-                    <th>Дата последней продажи</th>
-                    <th>Процент чистой прибыли</th>
+                    <th>Процент для продажи</th>
                 </tr>
                 {% for budjet in budjets %}
                 <tr>
-                    <td>{{ budjet.Date }}</td>
                     <td>{{ budjet.Procent }}%</td>
                 </tr>
                 {% endfor %}
@@ -211,14 +209,20 @@
                 <a href="{% url 'createraw' %}" class="floating-button">Добавить</a>
 </section>
 <section>
-                <h2>Ingredient</h2>
+            <h2>Ingredient</h2>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="search">
+                    <button type="submit">Поиск</button>
+                </form>
+                {% if ings %}
                 <table>
                     <tr>
                         <th>Продукт</th>
                         <th>Сырьё</th>
                         <th>Количество</th>
                     </tr>
-                    {% for ing in ings %}
+                   {% for ing in ings %}
                         <tr> 
                                         <td>{{  ing.Product.Product}}</td>
                                         <td>{{ ing.Rm_name.Rm_name}}</td>
@@ -233,7 +237,8 @@
                                          </td>
                         </tr>
                         {% endfor %}
-                </table><br>
+                    </table><br>
+                {% endif %}
             
                 <a href="{% url 'createingredient' %}" class="floating-button">Добавить</a>
 </section>

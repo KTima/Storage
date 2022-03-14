@@ -1,8 +1,11 @@
+from unittest import result
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from modul.models import *
 from .forms import *
 from django.views.generic import UpdateView,ListView,DeleteView
+from .filters import IngredinetsFilter
+from django.db.models import Q
 
 # Create your views here.
 
@@ -150,22 +153,22 @@ def CreateSale(request):
         form = SaleForm(request.POST)
         pr = request.POST.get('Product')
         amount = request.POST.get('Amount')
-        summ = request.POST.get('Summ')
         date = request.POST.get('Date')
         products = Products.objects.get(id=pr)
         seb = 0
         if form.is_valid():
             if int(amount)<=products.Amount:
                 seb = products.Summ / products.Amount
+                summ = (int(seb) * int(amount)) + ((int(seb) * int(amount) / 100 ) * budjet.Procent)
+                products.Summ = products.Summ - int(seb)*int(amount)
                 products.Amount = products.Amount - int(amount)
-                products.Summ = products.Summ -(int(seb)*int(amount))
-                proc = 100-(((int(seb)*int(amount))/int(summ)) * 100)
-                budjet.Amoun_budjet = budjet.Amoun_budjet + int(summ)
+                budjet.Amoun_budjet = budjet.Amoun_budjet + summ
                 budjet.Date = date
-                budjet.Procent = proc
                 budjet.save()
                 products.save()
-                form.save()
+                response = form.save()
+                response.Summ = summ
+                response.save()
                 return redirect('Home')
             else:
                 error = "Недостаточно количества продукта"
@@ -181,6 +184,9 @@ def CreateProduction(request):
     error = ''
     if request.method == 'POST':
         form = ProductionForm(request.POST)
+        pr = request.POST.get('Product')
+        amount = request.POST.get('Amount')
+        ingrs = Ingredients.objects.get(id=pr)
         if form.is_valid():
             form.save()
             return redirect('Home')
@@ -199,23 +205,38 @@ def IndexView(request):
     units = Units.objects.all()
     products = Products.objects.all()
     raws = Rawmaterial.objects.all()
-    ings = Ingredients.objects.all()
     purchases = PurRawmaterial.objects.all()
     sales = SaleProduct.objects.all()
     productions = Production.objects.all()
-    context = {
-        "budjets":budjets,
-        "positions":positions,
-        "employees":employees,
-        "units":units,
-        "products":products,
-        "raws":raws,
-        "ings":ings,
-        "purchases":purchases,
-        "sales":sales,
-        "productions":productions,
-    }
-    return render(request,"modul/index.html",context)
+    if request.method == 'POST':
+        search = request.POST.get('search')
+        ings = Ingredients.objects.filter(Q(Product__Product__icontains = search))
+        context = {
+            "budjets":budjets,
+            "positions":positions,
+            "employees":employees,
+            "units":units,
+            "products":products,
+            "raws":raws,
+            "purchases":purchases,
+            "sales":sales,
+            "productions":productions,
+            "ings":ings
+        }
+        return render(request,"modul/index.html",context)
+    else:
+        context1 = {
+            "budjets":budjets,
+            "positions":positions,
+            "employees":employees,
+            "units":units,
+            "products":products,
+            "raws":raws,
+            "purchases":purchases,
+            "sales":sales,
+            "productions":productions,
+        }
+        return render(request,"modul/index.html",context1)
 
 class BudjetUpdateView(UpdateView):
     model = Budjet
