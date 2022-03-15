@@ -182,14 +182,33 @@ def CreateSale(request):
 
 def CreateProduction(request):
     error = ''
+    spisok = []
     if request.method == 'POST':
         form = ProductionForm(request.POST)
         pr = request.POST.get('Product')
         amount = request.POST.get('Amount')
-        ingrs = Ingredients.objects.get(id=pr)
+        ingrs = Ingredients.objects.all().filter(Product_id = pr)
+        rm = Rawmaterial.objects.all()
         if form.is_valid():
-            form.save()
-            return redirect('Home')
+            for i in ingrs:
+                rm = Rawmaterial.objects.get(Rm_name=i.Rm_name.Rm_name)
+                if i.Amount <= rm.Amount:
+                    if (rm.Amount - int(amount) * i.Amount) >= 0:
+                        spisok.append(True)
+                    else:
+                        spisok.append(False)
+                        error = "Не хватает"
+                else:
+                    error = "Не хватает"
+            if spisok.count(False) == 0:
+                for ingr in ingrs:
+                    rm = Rawmaterial.objects.get(Rm_name=ingr.Rm_name.Rm_name)
+                    rm.Amount = rm.Amount - int(amount) * ingr.Amount
+                    rm.save()
+                    form.save()
+                return redirect('Home')
+            else:
+                error = "Не хватает"
         else:
             error = "Форма была неверно введена"
     form = ProductionForm
