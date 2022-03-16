@@ -1,10 +1,8 @@
-from unittest import result
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from modul.models import *
 from .forms import *
-from django.views.generic import UpdateView,ListView,DeleteView
-from .filters import IngredinetsFilter
+from django.views.generic import UpdateView,DeleteView
 from django.db.models import Q
 
 # Create your views here.
@@ -189,6 +187,7 @@ def CreateProduction(request):
         amount = request.POST.get('Amount')
         ingrs = Ingredients.objects.all().filter(Product_id = pr)
         rm = Rawmaterial.objects.all()
+        prod = Products.objects.get(id=pr)
         if form.is_valid():
             for i in ingrs:
                 rm = Rawmaterial.objects.get(Rm_name=i.Rm_name.Rm_name)
@@ -203,9 +202,15 @@ def CreateProduction(request):
             if spisok.count(False) == 0:
                 for ingr in ingrs:
                     rm = Rawmaterial.objects.get(Rm_name=ingr.Rm_name.Rm_name)
+                    seb_rm = rm.Summ / rm.Amount
                     rm.Amount = rm.Amount - int(amount) * ingr.Amount
+                    rm.Summ = rm.Summ - (seb_rm * (int(amount) * ingr.Amount))
                     rm.save()
-                    form.save()
+                seb_prod = prod.Summ / prod.Amount
+                prod.Amount = prod.Amount + int(amount) 
+                prod.Summ = prod.Summ + (int(seb_prod) * int(amount))
+                prod.save()
+                form.save()
                 return redirect('Home')
             else:
                 error = "Не хватает"

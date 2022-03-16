@@ -208,12 +208,12 @@
             
                 <a href="{% url 'createraw' %}" class="floating-button">Добавить</a>
 </section>
-<section>
+<section class="ingrs">
             <h2>Ingredient</h2>
-                <form action="" method="post">
+                <form action="" method="post" class="form">
                     {% csrf_token %}
-                    <input type="text" name="search">
-                    <button type="submit">Поиск</button>
+                    <input type="text" name="search" class="input">
+                    <button type="submit" class="button"></button>
                 </form>
                 {% if ings %}
                 <table>
