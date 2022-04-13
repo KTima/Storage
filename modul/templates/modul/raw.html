@@ -1,0 +1,32 @@
+{% extends "modul/home.html"%}
+
+{% block content %}
+<h2>Rawmaterial</h2>
+<table>
+    <tr>
+        <th>Название сырья</th>
+        <th>Единица измерения</th>
+        <th>Сумма</th>
+        <th>Количество</th>
+    </tr>
+    {% for rawmaterial in raws %}
+        <tr>
+            <td>{{ rawmaterial.Rm_name }}</td>
+            <td>{{ rawmaterial.Unit.Unit }}</td>
+            <td>{{ rawmaterial.Summ }}</td>
+            <td>{{ rawmaterial.Amount }}</td>
+            <td>
+                <a href="{% url 'rawupdate' rawmaterial.id %}" class="shine-button">Редактировать</a>
+            </td>
+            <td>
+                <form id="delete_form" action="{% url 'rawdelete' rawmaterial.id %}" method="post">{% csrf_token %}
+                    <button type="submit" class="shine-button">Удалить</button>
+                </form>
+
+            </td>
+        </tr>
+    {% endfor%}
+</table><br>
+
+<a href="{% url 'createraw' %}" class="floating-button">Добавить</a>
+{% endblock %}

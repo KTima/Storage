@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load static %}
+{% load crispy_forms_tags %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block link %}
+    {% endblock %}
+    <link rel="stylesheet" href="{% static 'modul/css/main.css' %}">
+    <title>Title</title>
+</head>
+<body style="background-color: #1b2b4c;">
+    <section class="tabs">
+        <ul>
+            <li><a href="{% url 'budget' %}" class="avtiv" >Бюджет</a></li>
+            <li><a href="{%url 'positions' %}" class="avtiv">Должность</a></li>
+            <li><a href="{% url 'employee' %}" class="avtiv">Сотрудники</a></li>
+            <li><a href="{% url 'unit' %}" class="avtiv">Единица <br> измерения</a></li>
+            <li><a href="{% url 'product' %}" class="avtiv">Продукт</a></li>
+            <li><a href="{% url 'raw' %}" class="avtiv">Сырье</a></li>
+            <li><a href="{% url 'ing' %}" class="avtiv">Ингридиенты</a></li>
+            <li><a href="{% url 'pur' %}" class="avtiv">Покупка</a></li>
+            <li><a href="{% url 'sale' %}" class="avtiv">Продажа</a></li>
+            <li><a href="{% url 'production' %}" class="avtiv">Производство</a></li>
+            <li><a href="{% url 'searchsalaries' %}" class="avtiv">Зарплаты</a></li>
+        </ul>
+    {% block content %}
+    {% endblock %}
+</section>
+</body>
+</html>

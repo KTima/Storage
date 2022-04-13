@@ -1,4 +1,5 @@
 
+from email.policy import default
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django import forms
@@ -8,7 +9,7 @@ from django.forms import ModelForm,DateInput
 class BudjetForm(ModelForm):
     class Meta:
         model = Budjet
-        fields = ['Amoun_budjet','Procent']
+        fields = ['Amoun_budjet','Procent','Bonus']
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -129,3 +130,16 @@ class ProductionForm(ModelForm):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Сохранить'))
+
+class SalariesForm(ModelForm):
+    class Meta:
+        model = Salaries
+        fields = ['Year','Month']
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Сохранить'))
+
+

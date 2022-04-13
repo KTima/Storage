@@ -1,0 +1,33 @@
+{% extends "modul/home.html"%}
+
+{% block content %}
+<h2>Employee</h2>
+<table>
+  <tr>
+      <th>ФИО</th>
+      <th>Должность</th>
+      <th>Оклад</th>
+      <th>Адрес</th>
+      <th>Телефон</th>
+  </tr>
+  {% for employee in employees %}
+      <tr>
+          <td>{{ employee.Full_name }}</td>
+          <td>{{ employee.Position.Position }}</td>
+          <td>{{ employee.Salary }}</td>
+          <td>{{ employee.Address }}</td>
+          <td>{{ employee.Phone }}</td>
+          <td>
+              <a href="{% url 'employeeupdate' employee.id %}" class="shine-button">Редактировать</a>
+          </td>
+          <td>
+              <form id="delete_form" action="{% url 'employeedelete' employee.id %}" method="post">{% csrf_token %}
+                  <button type="submit" class="shine-button">Удалить</button>
+              </form>
+          </td>
+      </tr>
+  {% endfor %} 
+</table><br>
+
+<a href="{% url 'createemployee' %}" class="floating-button">Добавить</a>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends  "modul/home.html" %}
+{% block content %}
+<h2>Budget</h2>
+<table cellpadding="4" cellspacing="1">
+  <tr>
+      <th>Cумма бюджета</th>
+  </tr>
+  {% for budjet in budjets %}
+      <tr>
+          <td> 
+              {{ budjet.Amoun_budjet }}
+          </td>
+          <td>
+              <a href="{% url 'budjetsupdate' budjet.id %}" class="shine-button">Редактировать</a>
+          </td>
+          <td>
+              <form id="delete_form" action="{% url 'budjetsdelete' budjet.id %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="shine-button">Удалить</button>
+              </form>
+          </td>
+      </tr>
+      {% endfor %}
+      <tr>
+          <th>Процент для продажи</th>
+          <th>Бонус для сотрудников</th>
+      </tr>
+      {% for budjet in budjets %}
+      <tr>
+          <td>{{ budjet.Procent }}%</td>
+          <td>{{ budjet.Bonus }}%</td>
+      </tr>
+      {% endfor %}
+</table><br>
+
+<a href="{% url 'createbudjet' %}" class="floating-button">Добавить</a>
+{% endblock %}

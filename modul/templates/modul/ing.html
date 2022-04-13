@@ -1,0 +1,40 @@
+{% extends "modul/home.html"%}
+{% block content %}
+
+<h2>Ingredient</h2>
+<form action="{% url 'ing' %}" method="get" >
+    <select name="ingrs" id="select-box1" class="select">
+        <option value="allser">---------------</option>
+        <option value="Мотор">Mотор</option>
+        <option value="Машина">Машина</option>
+        <option value="Шины">Шины</option>
+    </select>
+<button type="submit">Поиск</button>
+</form>
+<table>
+    <tr>
+        <th>Продукт</th>
+        <th>Сырьё</th>
+        <th>Количество</th>
+    </tr>
+    {% if object_list %}
+   {% for ing in object_list %}
+        <tr> 
+                        <td>{{  ing.Product.Product}}</td>
+                        <td>{{ ing.Rm_name.Rm_name}}</td>
+                        <td>{{ ing.Amount}}</td>
+                        <td>
+                            <a href="{% url 'ingupdate' ing.id %}" class="shine-button">Редактировать</a>
+                        </td>
+                        <td>
+                            <form id="delete_form" action="{% url 'ingdelete' ing.id %}" method="post">{% csrf_token %}
+                            <button type="submit" class="shine-button">Удалить</button>
+                        </form>
+                         </td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+    </table><br>
+
+<a href="{% url 'createingredient' %}" class="floating-button">Добавить</a>
+{% endblock %}

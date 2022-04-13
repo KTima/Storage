@@ -60,10 +60,23 @@
                 {% endfor %}
                 <tr>
                     <th>Процент для продажи</th>
+                    <th>Бонус для сотрудников</th>
                 </tr>
                 {% for budjet in budjets %}
                 <tr>
                     <td>{{ budjet.Procent }}%</td>
+                    <td>{{ budjet.Bonus }}%</td>
+                </tr>
+                {% endfor %}
+
+                <tr>
+                    <th>Сотрудник</th>
+                    <th>Месяц</th>
+                </tr>
+                {% for salarie in salaries %}
+                <tr>
+                    <td>{{ salarie.Name.Full_name }}</td>
+                    <td>{{ salarie.Month }}</td>
                 </tr>
                 {% endfor %}
         </table><br>
@@ -210,19 +223,21 @@
 </section>
 <section class="ingrs">
             <h2>Ingredient</h2>
-                <form action="" method="post" class="form">
-                    {% csrf_token %}
-                    <input type="text" name="search" class="input">
-                    <button type="submit" class="button"></button>
+                <form action="{% url 'Home' %}" method="get" class="form">
+                    <select name="search" id="">
+                        <option value="Мотор">Мотор</option>
+                        <option value="Шины">Шины</option>
+                        <option value="машина">машина</option>
+                    </select>
+                    <button type="submit" class="button">Найти</button>
                 </form>
-                {% if ings %}
                 <table>
                     <tr>
                         <th>Продукт</th>
                         <th>Сырьё</th>
                         <th>Количество</th>
                     </tr>
-                   {% for ing in ings %}
+                   {% for ing in object_list %}
                         <tr> 
                                         <td>{{  ing.Product.Product}}</td>
                                         <td>{{ ing.Rm_name.Rm_name}}</td>
@@ -238,7 +253,6 @@
                         </tr>
                         {% endfor %}
                     </table><br>
-                {% endif %}
             
                 <a href="{% url 'createingredient' %}" class="floating-button">Добавить</a>
 </section>

@@ -1,5 +1,5 @@
-from datetime import datetime
-from sqlite3 import Date
+from datetime import datetime,date
+
 from tabnanny import verbose
 from django.db import models
 
@@ -7,8 +7,8 @@ from django.db import models
 
 class Budjet(models.Model):
     Amoun_budjet = models.IntegerField("Сумма бюджета",default=0)
-    Date = models.DateField("дата продажи",default=None,null=True)
     Procent = models.IntegerField("процент прибыли",default=0)
+    Bonus = models.IntegerField("Бонус",default=0)
 
     def __str__(self):
         return str(self.Amoun_budjet)
@@ -54,8 +54,8 @@ class  Units(models.Model):
 class  Products(models.Model):
     Product = models.CharField("Продукт",max_length=150)
     Unit = models.ForeignKey(Units,verbose_name="Единица измерения",null=True,on_delete=models.SET_NULL)
-    Summ = models.IntegerField("Сумма",default=0)
-    Amount = models.IntegerField("Количество",default=0)    
+    Summ = models.FloatField("Сумма",default=0)
+    Amount = models.FloatField("Количество",default=0)    
 
     def __str__(self):
         return self.Product
@@ -67,8 +67,8 @@ class  Products(models.Model):
 class Rawmaterial(models.Model):
     Rm_name = models.CharField("Название",max_length=150)
     Unit = models.ForeignKey(Units,verbose_name="Единица измерения",null=True,on_delete=models.SET_NULL)
-    Summ = models.IntegerField("Сумма",default=0)
-    Amount = models.IntegerField("Количество",default=0)
+    Summ = models.FloatField("Сумма",default=0)
+    Amount = models.FloatField("Количество",default=0)
 
     def __str__(self):
         return self.Rm_name
@@ -80,7 +80,7 @@ class Rawmaterial(models.Model):
 class Ingredients(models.Model):
     Product = models.ForeignKey(Products,verbose_name="Продукт",null=True,on_delete=models.CASCADE)
     Rm_name = models.ForeignKey(Rawmaterial,verbose_name="Сырьё",null=True,on_delete=models.SET_NULL)
-    Amount = models.IntegerField("Количество",default=0)
+    Amount = models.FloatField("Количество",default=0)
 
     def __str__(self):
         return str(self.Product)
@@ -91,7 +91,7 @@ class Ingredients(models.Model):
 
 class Production(models.Model):
     Product = models.ForeignKey(Products,verbose_name="Продукт",null=True,on_delete=models.CASCADE)
-    Amount = models.IntegerField("Количество",default=0)
+    Amount = models.FloatField("Количество",default=0)
     Date = models.DateField("Дата производства")
     Employee = models.ForeignKey(Employees,verbose_name="Сотрудник",null=True,on_delete=models.SET_NULL)
 
@@ -104,8 +104,8 @@ class Production(models.Model):
 
 class PurRawmaterial(models.Model):
     Rm_name = models.ForeignKey(Rawmaterial,verbose_name="Сырьё",null=True,on_delete=models.CASCADE)
-    Amount = models.IntegerField("Количество",default=0)
-    Summ = models.IntegerField("Сумма",default=0)
+    Amount = models.FloatField("Количество",default=0)
+    Summ = models.FloatField("Сумма",default=0)
     Date = models.DateField("Дата покупки")
     Employee = models.ForeignKey(Employees,verbose_name="Сотрудник",null=True,on_delete=models.SET_NULL)
 
@@ -119,10 +119,26 @@ class PurRawmaterial(models.Model):
 def default_datetime():
      return datetime.now()
 
+def today_month():
+    return date.today().strftime('%B')
+
+def today_month():
+    return date.today().strftime('%B')
+
+class Month(models.Model):
+    month = models.CharField("Месяц",max_length=255)
+
+    def __str__(self):
+        return self.month
+
+    class Meta:
+        verbose_name = 'Месяц'
+        verbose_name_plural = 'Месяцаы'
+
 class SaleProduct(models.Model):
     Product = models.ForeignKey(Products,verbose_name="Продукт",null=True,on_delete=models.CASCADE)
-    Amount = models.IntegerField("Количество",default=0)
-    Summ = models.IntegerField("Сумма",default=0)
+    Amount = models.FloatField("Количество",default=0)
+    Summ = models.FloatField("Сумма",default=0)
     Date = models.DateField("Дата продажи")
     Employee = models.ForeignKey(Employees,verbose_name="Сотрудник",null=True,on_delete=models.SET_NULL)
 
@@ -132,3 +148,24 @@ class SaleProduct(models.Model):
     class Meta:
         verbose_name = 'Продажа сырья'
         verbose_name_plural = 'Продажа сырья'
+
+
+class Salaries(models.Model):
+    Name = models.CharField("Имя сотрудника",max_length=255)
+    Year = models.IntegerField("Год выдачи",default=0)
+    Month = models.ForeignKey(Month, on_delete=models.SET_NULL,null=True,blank=True)
+    Purchases = models.IntegerField("Покупка",default=0)
+    Sales = models.IntegerField("Продажа",default=0)
+    Production = models.IntegerField("Производство",default=0)
+    TotalPart = models.IntegerField("Участие",default=0)
+    Bonus = models.IntegerField("Бонус",default=0)
+    Salary = models.IntegerField("Оклад",default=0)
+    IsGiven = models.BooleanField("Выдано",default=False)
+    TotalSum = models.IntegerField("Общая сумма",default=0)
+
+    def __str__(self):
+        return str(self.Name)
+
+    class Meta:
+        verbose_name = 'Выдача ЗП'
+        verbose_name_plural = 'Выдача ЗП'

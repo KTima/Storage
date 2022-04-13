@@ -1,0 +1,31 @@
+{% extends "modul/home.html" %}
+
+{% block content %}
+<h2>Product</h2>
+                <table>
+                    <tr>
+                        <th>Продукт</th>
+                        <th>Единица измерения</th>
+                        <th>Сумма</th>
+                        <th>Количество</th>
+                    </tr>
+                    {% for product in products %}
+                        <tr>
+                            <td>{{ product.Product }}</td>
+                            <td>{{ product.Unit.Unit }}</td>
+                            <td>{{ product.Summ }}</td>
+                            <td>{{ product.Amount }}</td>
+                            <td>
+                                <a href="{% url 'productupdate' product.id %}" class="shine-button">Редактировать</a>
+                            </td>
+                            <td>
+                                <form id="delete_form" action="{% url 'productdelete' product.id %}" method="post">{% csrf_token %}
+                                    <button type="submit" class="shine-button">Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor%}
+                </table><br>
+            
+            <a href="{% url 'createproduct' %}" class="floating-button">Добавить</a>
+{% endblock %}

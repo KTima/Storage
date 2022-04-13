@@ -1,0 +1,45 @@
+{% extends "modul/home.html" %}
+
+{% block content %}
+<h2>Purchase</h2>
+    <table cellpadding="4" cellspacing="1">
+      <tr>
+          <th>Сырье</th>
+          <th>Количество</th>
+          <th>Сумма</th>
+          <th>Дата</th>
+          <th>Сотрудник</th>
+
+      </tr>
+      {% for purchase in purchases %}
+          <tr>
+            <td> 
+                {{ purchase.Rm_name.Rm_name }}
+            </td>
+            <td> 
+                {{ purchase.Amount }}
+            </td>
+            <td> 
+                {{ purchase.Summ }}
+            </td>
+            <td> 
+                {{ purchase.Date }}
+            </td>
+            <td> 
+                {{ purchase.Employee.Full_name }}
+            </td>
+              <td>
+                  <a href="{% url 'purupdate' purchase.id %}" class="shine-button">Редактировать</a>
+              </td>
+              <td>
+                  <form id="delete_form" action="{% url 'purdelete' purchase.id %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit" class="shine-button">Удалить</button>
+                  </form>
+              </td>
+          </tr>
+          {% endfor %}
+  </table><br>
+
+<a href="{% url 'createpurchase' %}" class="floating-button">Добавить</a>
+{% endblock %}

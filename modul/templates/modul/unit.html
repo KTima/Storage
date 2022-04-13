@@ -1,0 +1,26 @@
+{% extends "modul/home.html"%}
+
+{% block content %}
+<h2>Unit</h2>
+              <table>
+                <tr>
+                    <th>Единицы измерения</th>
+                </tr>
+                {% for unit in units %}
+                    <tr>
+                        <td>{{ unit.Unit }}</td>
+                        <td>
+                            <a href="{% url 'unitupdate' unit.id %}" class="shine-button">Редактировать</a>
+                        </td>
+                        <td>
+                            <form id="delete_form" action="{% url 'unitdelete' unit.id %}" method="post">{% csrf_token %}
+                                <button type="submit" class="shine-button">Удалить</button>
+                            </form>
+        
+                        </td>
+                    </tr>
+                {% endfor%}
+            </table><br>
+        
+            <a href="{% url 'createunit' %}" class="floating-button">Добавить</a>
+{% endblock %}

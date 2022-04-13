@@ -1,0 +1,45 @@
+{% extends "modul/home.html"%}
+{% block content %}
+<h2>Sale</h2>
+<table cellpadding="4" cellspacing="1">
+  <tr>
+      <th>Продукт</th>
+      <th>Количество</th>
+      <th>Сумма</th>
+      <th>Дата</th>
+      <th>Сотрудник</th>
+
+  </tr>
+  {% for sale in sales %}
+      <tr>
+        <td> 
+            {{ sale.Product.Product }}
+        </td>
+        <td> 
+            {{ sale.Amount }}
+        </td>
+        <td> 
+            {{ sale.Summ }}
+        </td>
+        <td> 
+            {{ sale.Date }}
+        </td>
+        <td> 
+            {{ sale.Employee.Full_name }}
+        </td>
+          <td>
+              <a href="{% url 'saleupdate' sale.id %}" class="shine-button">Редактировать</a>
+          </td>
+          <td>
+              <form id="delete_form" action="{% url 'saledelete' sale.id %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="shine-button">Удалить</button>
+              </form>
+          </td>
+      </tr>
+      {% endfor %}
+</table><br>
+
+<a href="{% url 'createsale' %}" class="floating-button">Добавить</a>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'modul/home.html'%}
+{% block content %}
+<h2><a href="{% url 'searchsalaries' %}">Salaries</a></h2>
+<a href="{% url 'createsalaries' %}">Создать</a>
+<form action="" method="get">
+{{ MyFilter.form }}
+<button type="submit" name = "Search">Search</button>
+<button type="submit" name = "Oplatit" > Оплатить </button>
+</form>
+
+<h1>{{summ}}</h1>
+<h3>{{error}}</h3>
+<table>
+    <tr> 
+        <th>Имя сотрудника</th>
+        <th>Год выдачи</th>
+        <th>Месяц выдачи</th>
+        <th>Покупка</th>
+        <th>Продажа</th>
+        <th>Производство</th>
+        <th>Участие</th>
+        <th>Бонус</th>
+        <th>Оклад</th>
+        <th>Выдано</th>
+        <th>Общая сумма</th>
+    </tr>
+    {% for sal in sr %}
+    <tr>
+        <td>{{ sal.Name }}</td>
+        <td>{{ sal.Year }}</td>
+        <td>{{ sal.Month }}</td>
+        <td>{{ sal.Purchases }}</td>
+        <td>{{ sal.Sales }}</td>
+        <td>{{ sal.Production }}</td>
+        <td>{{ sal.TotalPart }}</td>
+        <td>{{ sal.Bonus }}</td>
+        <td>{{ sal.Salary }}</td>
+        <td>{{ sal.IsGiven }}</td>
+        <td>{{ sal.TotalSum }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% endblock %}
