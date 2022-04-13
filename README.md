@@ -1,5 +1,7 @@
 Система для учета склада
 
+Необходимо установить библиотеки pip install django-crispy-forms и pip install django-filter
+
 Проект реализован на языке Python(Django)
 
 
