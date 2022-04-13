@@ -1,4 +1,5 @@
 {% extends 'modul/home.html'%}
+{% load static %}
 {% block content %}
 <h2><a href="{% url 'searchsalaries' %}">Salaries</a></h2>
 <a href="{% url 'createsalaries' %}">Создать</a>
@@ -35,7 +36,11 @@
         <td>{{ sal.TotalPart }}</td>
         <td>{{ sal.Bonus }}</td>
         <td>{{ sal.Salary }}</td>
-        <td>{{ sal.IsGiven }}</td>
+        {% if  sal.IsGiven == True %}
+        <td><img src="{% static 'modul/photo/icons8-галочка-48.png'  %}" alt=""></td>
+        {% else %}
+        <td><img src="{% static 'modul/photo/icons8-крестик-48.png'  %}" alt=""></td>
+        {% endif %}
         <td>{{ sal.TotalSum }}</td>
     </tr>
     {% endfor %}

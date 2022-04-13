@@ -185,4 +185,8 @@ tr:nth-child(even) {
     padding: 2px;
     font-family: Sanchez;
   }
-  
+  img{
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+  }
